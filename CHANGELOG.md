@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- A1.1.1: the sidecar takes the embed kit from its published release v0.0.1 instead of a path to a local checkout.
 - A1.9: a frame whose size or scale differs from the last configure is answered with `consumed` and recorded on standard error as `frame <sequence> stale: …`, and the page shows no error. Input: while a region was resized the page showed "frame 1200 is 1320 by 829 at scale 1, but the region view is configured as 1319 by 829", because the application draws at the size it had before the new configure reached it. Red: the page received that error. Green: 6 of 6.
 - A1.8: a configure that arrives before the open of its surface is kept and passed to the application that the open starts. Input: the host configures the region when the page creates its composition, which can be before the open of the page, and the sidecar refused that configure with an error. Red: the configure was refused. Green: 6 of 6.
 - A1.7: `package.json` names its repository, which the workspace registry reads for every release.

@@ -13,5 +13,4 @@ path = "src/main.rs"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tokio = { version = "1", features = ["rt", "macros", "io-util", "io-std", "net", "process", "signal", "sync", "time"] }
-# The embed kit is a local repository until it is published; this path is replaced by its release then (A1.1.1).
-soksak-embed = { path = "../../kits/embed" }
+soksak-embed = { git = "https://github.com/soksak-app/kit-embed.git", tag = "v0.0.1" }

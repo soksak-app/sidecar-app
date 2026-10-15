@@ -279,6 +279,7 @@ dependencies = [
 [[package]]
 name = "soksak-embed"
 version = "0.0.1"
+source = "git+https://github.com/soksak-app/kit-embed.git?tag=v0.0.1#49e151d898379c6eef1f03265308b457fca25739"
 dependencies = [
  "base64",
  "getrandom",
