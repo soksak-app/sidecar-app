@@ -416,9 +416,15 @@ async fn run(
                     }
                 }
                 Some(Control::Answer { sequence, error: refused }) => {
-                    if let Some(kind) = refused.filter(|kind| kind != "stale") {
-                        let name = region.as_ref().map_or("", |region| region.name.as_str());
-                        error(&out, &surface, format!("the host refused frame {sequence} of the region {name}: {kind}"));
+                    let name = region.as_ref().map_or("", |region| region.name.as_str());
+                    match refused.as_deref() {
+                        // A stale frame cannot replace the current raster, and a frame of a region that is not attached
+                        // in the current composition or generation, such as a frame drawn before the page attaches the
+                        // region, has no place to show (docs/spec/sidecars.md of core); the frame frees its buffer and is
+                        // recorded.
+                        Some(kind @ ("stale" | "notAttached")) => eprintln!("frame {sequence} refused: {kind}"),
+                        Some(kind) => error(&out, &surface, format!("the host refused frame {sequence} of the region {name}: {kind}")),
+                        None => {}
                     }
                     if let Err(failure) = send(&mut connection, &FromSidecar::Consumed { sequence }).await {
                         error(&out, &surface, failure);

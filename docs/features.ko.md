@@ -13,3 +13,4 @@
   - [o] A1.7 — P1: workspace registry가 요구하는 저장소를 `package.json`이 이름한다.
   - [o] A1.8 — P1: 표면의 open보다 먼저 온 configure를 보관했다가 open이 시작한 애플리케이션에 넘긴다.
   - [o] A1.9 — P1: 이전 configure의 frame은 page에 오류로 보고하지 않고 `consumed`로 답하며 기록한다: region 크기가 바뀌는 동안 애플리케이션은 새 configure가 닿기 전의 크기로 frame을 그린다.
+  - [o] A1.10 — P1: host가 현재 composition이나 generation에 붙지 않은 region 때문에 `notAttached`로 답한 frame은, `stale` 답처럼 buffer를 풀고 기록되며 page에 보고되지 않는다. page는 region을 붙이기 전에 애플리케이션을 열므로 첫 frame이 붙기 전에 올 수 있고, core의 연결 창 검사가 그 오류를 간헐적으로 보고했다.

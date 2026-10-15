@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- A1.10: host가 `notAttached`로 답한 frame은 `stale` 답처럼 buffer를 풀고 `frame <n> refused: notAttached`로 기록되며, page는 오류를 보지 않는다. 다른 거부는 오류로 남는다. Red: sidecar 검사가 consumed 답 대신 오류 body를 찾았다. Green: 6개 중 6개.
 - A1.1.1: sidecar가 로컬 checkout의 path 대신 공개된 embed kit release v0.0.1을 쓴다.
 - A1.9: 크기나 배율이 마지막 configure와 다른 frame은 `consumed`로 답하고 standard error에 `frame <sequence> stale: …`로 기록하며, page는 오류를 보이지 않는다. 입력: region 크기를 바꾸는 동안 page가 "frame 1200 is 1320 by 829 at scale 1, but the region view is configured as 1319 by 829"를 보였다. 애플리케이션은 새 configure가 닿기 전의 크기로 그리기 때문이다. Red: page가 그 오류를 받았다. Green: 6개 중 6개.
 - A1.8: 표면의 open보다 먼저 온 configure를 보관했다가 open이 시작한 애플리케이션에 넘긴다. 입력: host는 page가 composition을 만들 때 region을 configure하며 그것은 page의 open보다 앞설 수 있는데, sidecar가 그 configure를 오류로 거부했다. Red: configure가 거부되었다. Green: 6개 중 6개.

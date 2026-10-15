@@ -259,6 +259,14 @@ fn a_refused_frame_and_a_frame_of_another_size_free_their_buffers() {
         "{\"type\":\"consumed\",\"sequence\":1}",
         "a stale frame is no error"
     );
+    // A frame of a region that is not attached in the current composition or generation, such as the first frames that
+    // the application draws before the page attaches the region, frees its buffer and is no error.
+    host.send(json!({"surface": "s1", "body": {"image": {"error": "notAttached", "name": "view", "generation": 2, "raster": 5, "sequence": 1}}}));
+    assert_eq!(
+        host.body()["title"],
+        "{\"type\":\"consumed\",\"sequence\":1}",
+        "a frame of a region that is not attached is no error"
+    );
     host.send(json!({"surface": "s1", "root": "/", "closed": true}));
     host.body();
     host.body();

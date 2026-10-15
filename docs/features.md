@@ -13,3 +13,4 @@
   - [o] A1.7 — P1: `package.json` names its repository, which the workspace registry requires.
   - [o] A1.8 — P1: A configure that arrives before the open of its surface is kept and passed to the application that the open starts.
   - [o] A1.9 — P1: A frame of an earlier configure is answered with `consumed` and recorded, not reported to the page: while a region changes size the application draws frames at the size it had before the new configure reached it.
+  - [o] A1.10 — P1: A frame that the host answers with `notAttached`, for a region that is not attached in the current composition or generation, frees its buffer and is recorded, not reported to the page, as a `stale` answer is: the page opens the application before it attaches the region, so the first frames can arrive before the attachment, and the connector window check of core reported the error intermittently.
