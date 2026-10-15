@@ -11,3 +11,4 @@
   - [o] A1.5 — P1: release가 `package.json`의 `files`에 `sidecar.json`과 build한 실행 파일을 두어 `sok sidecar release`가 그것들을 묶는다.
   - [o] A1.6 — P1: sidecar는 새 입력을 처음 보이는 frame에 `frame <sequence> input <n>`을 standard error에 기록해, page의 입력을 그 frame에 대한 host의 응답에 잇는다.
   - [o] A1.7 — P1: workspace registry가 요구하는 저장소를 `package.json`이 이름한다.
+  - [o] A1.8 — P1: 표면의 open보다 먼저 온 configure를 보관했다가 open이 시작한 애플리케이션에 넘긴다.

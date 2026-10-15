@@ -85,6 +85,9 @@ async fn main() {
         }
     });
     let mut surfaces: HashMap<String, Surface> = HashMap::new();
+    // The configure of a surface whose application is not running: the host configures the region when the page creates
+    // its composition, which can be before the open of the page, and the next open passes it on.
+    let mut configured: HashMap<String, Control> = HashMap::new();
     let mut tasks = tokio::task::JoinSet::new();
     let mut input = BufReader::new(tokio::io::stdin()).lines();
     let mut count = 0u64;
@@ -109,6 +112,7 @@ async fn main() {
             continue;
         };
         if message["closed"] == true {
+            configured.remove(&surface);
             match surfaces.remove(&surface) {
                 Some(entry) if entry.control.send(Control::Close { answer: true }).is_ok() => {}
                 _ => {
@@ -163,7 +167,12 @@ async fn main() {
                 continue;
             };
             match surfaces.get(&surface) {
-                Some(entry) if entry.control.send(control).is_ok() => {}
+                Some(entry) if !entry.control.is_closed() => {
+                    let _ = entry.control.send(control);
+                }
+                _ if matches!(control, Control::Configure { .. }) => {
+                    configured.insert(surface, control);
+                }
                 _ => error(
                     &out,
                     &surface,
@@ -206,6 +215,9 @@ async fn main() {
                 let socket = std::env::temp_dir()
                     .join(format!("soksak-app-{}-{count}.sock", std::process::id()));
                 let (control, receiver) = mpsc::unbounded_channel();
+                if let Some(configure) = configured.remove(&surface) {
+                    let _ = control.send(configure);
+                }
                 tasks.spawn(run(
                     surface.clone(),
                     command.clone(),

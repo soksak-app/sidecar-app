@@ -320,3 +320,26 @@ fn a_request_that_breaks_the_protocol_is_an_error_that_names_it() {
     );
     assert_eq!(host.next(), json!({"surface": "s1", "closed": true}));
 }
+
+#[test]
+fn a_configure_before_open_reaches_the_application() {
+    // The host configures the region as soon as the page creates its composition, which can be before the open of the page.
+    let mut host = Host::start();
+    host.send(configure());
+    host.open(application("echo"));
+    assert_eq!(host.body()["event"], "started");
+    assert_eq!(
+        host.body(),
+        json!({"event": "connected", "toolkit": "fake"})
+    );
+    assert_eq!(
+        host.body(),
+        json!({"event": "state", "title": "{\"type\":\"configure\",\"width\":64,\"height\":32,\"scale\":2.0}"})
+    );
+    assert_eq!(host.body()["image"]["generation"], 2);
+    host.body();
+    host.send(json!({"surface": "s1", "root": "/", "closed": true}));
+    host.body();
+    host.body();
+    assert_eq!(host.next(), json!({"surface": "s1", "closed": true}));
+}

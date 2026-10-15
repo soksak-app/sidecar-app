@@ -11,3 +11,4 @@
   - [o] A1.5 — P1: The release lists `sidecar.json` and the built executable in `files` of `package.json`, so `sok sidecar release` packs them.
   - [o] A1.6 — P1: The sidecar records `frame <sequence> input <n>` on standard error for the first frame that shows a new input, which joins the input of the page to the answer of the host for that frame.
   - [o] A1.7 — P1: `package.json` names its repository, which the workspace registry requires.
+  - [o] A1.8 — P1: A configure that arrives before the open of its surface is kept and passed to the application that the open starts.

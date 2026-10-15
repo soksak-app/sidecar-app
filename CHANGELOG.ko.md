@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- A1.8: 표면의 open보다 먼저 온 configure를 보관했다가 open이 시작한 애플리케이션에 넘긴다. 입력: host는 page가 composition을 만들 때 region을 configure하며 그것은 page의 open보다 앞설 수 있는데, sidecar가 그 configure를 오류로 거부했다. Red: configure가 거부되었다. Green: 6개 중 6개.
 - A1.7: workspace registry가 모든 release에서 읽는 저장소를 `package.json`이 이름한다.
 - A1.6: sidecar는 새 입력을 처음 보이는 frame에 `frame <sequence> input <n>`을 standard error에 기록한다. image envelope에는 입력의 member가 없으므로, 이 기록이 page가 보낸 입력을 그것을 보이는 frame에 대한 host의 응답에 잇는다. Red: 기록 없음. Green: 한 입력의 frame 두 개에 기록 하나.
 - A1.5: `package.json`의 `files`가 `sidecar.json`과 `build/soksak-app`을 두어 `sok sidecar release`가 sidecar를 묶는다.
