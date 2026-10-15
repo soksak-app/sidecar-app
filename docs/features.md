@@ -9,3 +9,4 @@
   - [o] A1.3 — P1: Start the application with the embed socket in its environment, stop it when the surface closes, and report an application that ends as an error that names it.
   - [o] A1.4 — P1: Relay the configure of the host to the application, each frame of the application to the host as an image envelope, each answer of the host as `consumed`, and the input of the page to the application.
   - [o] A1.5 — P1: The release lists `sidecar.json` and the built executable in `files` of `package.json`, so `sok sidecar release` packs them.
+  - [o] A1.6 — P1: The sidecar records `frame <sequence> input <n>` on standard error for the first frame that shows a new input, which joins the input of the page to the answer of the host for that frame.

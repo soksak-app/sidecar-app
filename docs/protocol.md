@@ -29,3 +29,7 @@ The application sidecar runs one application per surface. The application speaks
 ## Image envelope
 
 Each `frame` of the application becomes the image envelope of the sidecar protocol: the name, generation and raster of the last configure, and the token, width, height, scale, format and sequence of the frame. A frame before the first configure, or a frame whose size or scale differs from the last configure, is an error of the application, and the sidecar answers it with `consumed` so that its buffer is free again.
+
+## Records
+
+The sidecar writes `frame <sequence> input <n>` on standard error for the first frame that shows a new input, which the host stores as a record of the sidecar. The image envelope has no member for the input, so this record joins the input that the page sent to the answer of the host for the frame that shows it.

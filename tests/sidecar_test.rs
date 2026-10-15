@@ -63,6 +63,25 @@ fn fake_application() {
     loop {
         let message = client.recv().unwrap();
         report(&mut client, &message);
+        if let FromSidecar::Pointer { input, .. } = message {
+            // A frame that shows the pointer input, which the sidecar records once.
+            for sequence in [2, 3] {
+                client
+                    .send(&FromApplication::Frame {
+                        sequence,
+                        token: Token::IosurfaceGlobal {
+                            id: 1,
+                            nonce: "AAAAAAAAAAAAAAAAAAAAAA==".into(),
+                        },
+                        width,
+                        height,
+                        scale,
+                        format: "bgra8".into(),
+                        input: Some(input),
+                    })
+                    .unwrap();
+            }
+        }
         if message == FromSidecar::End {
             return;
         }
@@ -71,7 +90,7 @@ fn fake_application() {
 
 struct Host {
     child: Child,
-    input: ChildStdin,
+    input: Option<ChildStdin>,
     lines: mpsc::Receiver<Value>,
 }
 
@@ -87,6 +106,7 @@ impl Host {
         let mut child = Command::new(env!("CARGO_BIN_EXE_soksak-app"))
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
             .spawn()
             .unwrap();
         let input = child.stdin.take().unwrap();
@@ -104,13 +124,25 @@ impl Host {
         });
         Host {
             child,
-            input,
+            input: Some(input),
             lines,
         }
     }
 
+    /// Closes standard input, waits for the sidecar to end and returns its standard error.
+    fn finish(&mut self) -> String {
+        drop(self.input.take());
+        assert!(self.child.wait().unwrap().success());
+        let mut records = String::new();
+        std::io::Read::read_to_string(&mut self.child.stderr.take().unwrap(), &mut records)
+            .unwrap();
+        records
+    }
+
     fn send(&mut self, value: Value) {
         self.input
+            .as_mut()
+            .unwrap()
             .write_all(format!("{value}\n").as_bytes())
             .unwrap();
     }
@@ -176,6 +208,8 @@ fn the_sidecar_relays_configure_frames_answers_input_and_close() {
     host.send(json!({"surface": "s1", "body": {"operation": "input", "message": pointer}}));
     let title: Value = serde_json::from_str(host.body()["title"].as_str().unwrap()).unwrap();
     assert_eq!(title, pointer);
+    assert_eq!(host.body()["image"]["sequence"], 2);
+    assert_eq!(host.body()["image"]["sequence"], 3);
     host.send(json!({"surface": "s1", "root": "/", "closed": true}));
     assert_eq!(host.body()["title"], "{\"type\":\"end\"}");
     assert_eq!(
@@ -183,7 +217,16 @@ fn the_sidecar_relays_configure_frames_answers_input_and_close() {
         json!({"event": "exited", "exit": "exit status 0"})
     );
     assert_eq!(host.next(), json!({"surface": "s1", "closed": true}));
-    host.input.flush().unwrap();
+    let records = host.finish();
+    let frames: Vec<&str> = records
+        .lines()
+        .filter(|line| line.starts_with("frame "))
+        .collect();
+    assert_eq!(
+        frames,
+        vec!["frame 2 input 11"],
+        "only the first frame that shows a new input is recorded: {records}"
+    );
 }
 
 #[test]

@@ -342,6 +342,8 @@ async fn run(
     );
     let mut connection: Option<Connection> = None;
     let mut region: Option<Region> = None;
+    // The input of the last frame that was recorded on standard error.
+    let mut recorded: Option<u64> = None;
     let mut stopping = false;
     let mut closing = false;
     let mut answer = false;
@@ -358,7 +360,7 @@ async fn run(
             },
             line = next_line(&mut connection) => match line {
                 Ok(Some(line)) => {
-                    if let Err(failure) = application_line(&surface, &out, &line, &mut connection, &region).await {
+                    if let Err(failure) = application_line(&surface, &out, &line, &mut connection, &region, &mut recorded).await {
                         error(&out, &surface, format!("application: {failure}"));
                         stopping = true;
                         let _ = child.start_kill();
@@ -379,7 +381,7 @@ async fn run(
                 while connection.is_some()
                     && let Ok(Some(line)) = next_line(&mut connection).await
                 {
-                    if application_line(&surface, &out, &line, &mut connection, &region).await.is_err() {
+                    if application_line(&surface, &out, &line, &mut connection, &region, &mut recorded).await.is_err() {
                         break;
                     }
                 }
@@ -450,6 +452,7 @@ async fn application_line(
     line: &str,
     connection: &mut Option<Connection>,
     region: &Option<Region>,
+    recorded: &mut Option<u64>,
 ) -> Result<(), String> {
     let message = decode_from_application(line).map_err(|failure| failure.to_string())?;
     let said_hello = connection
@@ -490,8 +493,14 @@ async fn application_line(
             height,
             scale,
             format,
-            ..
+            input,
         } => {
+            // The first frame that shows a new input is recorded, which joins the input of the page to the answer of the
+            // host for that sequence; the record grows with the input and not with the frames.
+            if input.is_some() && input != *recorded {
+                *recorded = input;
+                eprintln!("frame {sequence} input {}", input.unwrap_or_default());
+            }
             let fits = region.as_ref().filter(|region| {
                 (region.width, region.height, region.scale) == (width, height, scale)
             });
