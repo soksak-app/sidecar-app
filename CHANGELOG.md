@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- A2: `make release` makes the registry release with sok of core, the release workflow publishes it for a tag, and the ci workflow runs the tests and the commit message check. Green: the target made `soksak-sidecar-app-0.0.1-darwin-arm64.tar.gz` with its SHA-256.
 - A1.10: a frame that the host answers with `notAttached` frees its buffer and is recorded as `frame <n> refused: notAttached`, as a `stale` answer is, and the page sees no error; other refusals stay errors. Red: the sidecar check found the error body instead of the consumed answer. Green: 6 of 6.
 - A1.1.1: the sidecar takes the embed kit from its published release v0.0.1 instead of a path to a local checkout.
 - A1.9: a frame whose size or scale differs from the last configure is answered with `consumed` and recorded on standard error as `frame <sequence> stale: …`, and the page shows no error. Input: while a region was resized the page showed "frame 1200 is 1320 by 829 at scale 1, but the region view is configured as 1319 by 829", because the application draws at the size it had before the new configure reached it. Red: the page received that error. Green: 6 of 6.
