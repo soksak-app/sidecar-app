@@ -1,0 +1,16 @@
+[package]
+name = "soksak-app"
+version = "0.0.1"
+edition = "2024"
+license = "MIT"
+description = "The application sidecar of soksak: it starts an application, hands its frames to an image region and passes the input of the page to it."
+
+[[bin]]
+name = "soksak-app"
+path = "src/main.rs"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# The embed kit is a local repository until it is published; this path is replaced by its release then (A1.1.1).
+soksak-embed = { path = "../../kits/embed" }

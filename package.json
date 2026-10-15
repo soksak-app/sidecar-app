@@ -1,0 +1,12 @@
+{
+  "name": "@soksak/sidecar-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Application sidecar: starts an application that speaks the embed protocol, hands its frames to an image region and passes the input of the page to it.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.24.0",
+  "devDependencies": {
+    "@soksak/plugin-api": "git+https://github.com/soksak-app/core.git#v0.0.14&path:/packages/plugin-api"
+  }
+}

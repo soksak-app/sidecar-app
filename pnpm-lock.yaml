@@ -1,0 +1,24 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@soksak/plugin-api':
+        specifier: git+https://github.com/soksak-app/core.git#v0.0.14&path:/packages/plugin-api
+        version: https://codeload.github.com/soksak-app/core/tar.gz/f3be3373171eb75428325b4530eb3f170458500d#path:/packages/plugin-api
+
+packages:
+
+  '@soksak/plugin-api@https://codeload.github.com/soksak-app/core/tar.gz/f3be3373171eb75428325b4530eb3f170458500d#path:/packages/plugin-api':
+    resolution: {gitHosted: true, path: /packages/plugin-api, tarball: https://codeload.github.com/soksak-app/core/tar.gz/f3be3373171eb75428325b4530eb3f170458500d}
+    version: 0.0.14
+    hasBin: true
+
+snapshots:
+
+  '@soksak/plugin-api@https://codeload.github.com/soksak-app/core/tar.gz/f3be3373171eb75428325b4530eb3f170458500d#path:/packages/plugin-api': {}
