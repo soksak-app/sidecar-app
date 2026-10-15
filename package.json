@@ -4,6 +4,10 @@
   "private": true,
   "description": "Application sidecar: starts an application that speaks the embed protocol, hands its frames to an image region and passes the input of the page to it.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soksak-app/sidecar-app.git"
+  },
   "type": "module",
   "packageManager": "pnpm@11.24.0",
   "devDependencies": {

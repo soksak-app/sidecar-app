@@ -10,3 +10,4 @@
   - [o] A1.4 — P1: host의 configure를 애플리케이션에, 애플리케이션의 각 frame을 image envelope로 host에, host의 각 응답을 `consumed`로, page의 입력을 애플리케이션에 중계한다.
   - [o] A1.5 — P1: release가 `package.json`의 `files`에 `sidecar.json`과 build한 실행 파일을 두어 `sok sidecar release`가 그것들을 묶는다.
   - [o] A1.6 — P1: sidecar는 새 입력을 처음 보이는 frame에 `frame <sequence> input <n>`을 standard error에 기록해, page의 입력을 그 frame에 대한 host의 응답에 잇는다.
+  - [o] A1.7 — P1: workspace registry가 요구하는 저장소를 `package.json`이 이름한다.
