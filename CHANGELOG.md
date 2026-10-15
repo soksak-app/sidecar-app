@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- A1.9: a frame whose size or scale differs from the last configure is answered with `consumed` and recorded on standard error as `frame <sequence> stale: …`, and the page shows no error. Input: while a region was resized the page showed "frame 1200 is 1320 by 829 at scale 1, but the region view is configured as 1319 by 829", because the application draws at the size it had before the new configure reached it. Red: the page received that error. Green: 6 of 6.
 - A1.8: a configure that arrives before the open of its surface is kept and passed to the application that the open starts. Input: the host configures the region when the page creates its composition, which can be before the open of the page, and the sidecar refused that configure with an error. Red: the configure was refused. Green: 6 of 6.
 - A1.7: `package.json` names its repository, which the workspace registry reads for every release.
 - A1.6: the sidecar records `frame <sequence> input <n>` on standard error for the first frame that shows a new input; the image envelope has no member for the input, so this record joins the input that the page sent to the answer of the host for the frame that shows it. Red: no record. Green: one record for two frames of one input.

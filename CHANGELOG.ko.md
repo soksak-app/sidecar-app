@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- A1.9: 크기나 배율이 마지막 configure와 다른 frame은 `consumed`로 답하고 standard error에 `frame <sequence> stale: …`로 기록하며, page는 오류를 보이지 않는다. 입력: region 크기를 바꾸는 동안 page가 "frame 1200 is 1320 by 829 at scale 1, but the region view is configured as 1319 by 829"를 보였다. 애플리케이션은 새 configure가 닿기 전의 크기로 그리기 때문이다. Red: page가 그 오류를 받았다. Green: 6개 중 6개.
 - A1.8: 표면의 open보다 먼저 온 configure를 보관했다가 open이 시작한 애플리케이션에 넘긴다. 입력: host는 page가 composition을 만들 때 region을 configure하며 그것은 page의 open보다 앞설 수 있는데, sidecar가 그 configure를 오류로 거부했다. Red: configure가 거부되었다. Green: 6개 중 6개.
 - A1.7: workspace registry가 모든 release에서 읽는 저장소를 `package.json`이 이름한다.
 - A1.6: sidecar는 새 입력을 처음 보이는 frame에 `frame <sequence> input <n>`을 standard error에 기록한다. image envelope에는 입력의 member가 없으므로, 이 기록이 page가 보낸 입력을 그것을 보이는 frame에 대한 host의 응답에 잇는다. Red: 기록 없음. Green: 한 입력의 frame 두 개에 기록 하나.

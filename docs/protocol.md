@@ -28,7 +28,7 @@ The application sidecar runs one application per surface. The application speaks
 
 ## Image envelope
 
-Each `frame` of the application becomes the image envelope of the sidecar protocol: the name, generation and raster of the last configure, and the token, width, height, scale, format and sequence of the frame. A frame before the first configure, or a frame whose size or scale differs from the last configure, is an error of the application, and the sidecar answers it with `consumed` so that its buffer is free again.
+Each `frame` of the application becomes the image envelope of the sidecar protocol: the name, generation and raster of the last configure, and the token, width, height, scale, format and sequence of the frame. A frame before the first configure is an error of the application. A frame whose size or scale differs from the last configure was drawn before the new configure reached the application while the region changed size; the sidecar records it as `frame <sequence> stale: …` and reports no error. The sidecar answers both with `consumed`, so their buffers are free again.
 
 ## Records
 

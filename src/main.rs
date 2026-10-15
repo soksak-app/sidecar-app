@@ -523,13 +523,11 @@ async fn application_line(
                     json!({"image": {"name": region.name, "generation": region.generation, "raster": region.raster, "token": token, "width": width, "height": height, "scale": scale, "format": format, "sequence": sequence}}),
                 ),
                 (Some(region), None) => {
-                    error(
-                        out,
-                        surface,
-                        format!(
-                            "frame {sequence} is {width} by {height} at scale {scale}, but the region {} is configured as {} by {} at scale {}",
-                            region.name, region.width, region.height, region.scale
-                        ),
+                    // While a region changes size, the application draws at the size it had before the new configure
+                    // reached it; the frame frees its buffer and is recorded, and the next frame has the new size.
+                    eprintln!(
+                        "frame {sequence} stale: {width} by {height} at scale {scale}, configured {} by {} at scale {}",
+                        region.width, region.height, region.scale
                     );
                     send(connection, &FromSidecar::Consumed { sequence }).await?;
                 }

@@ -237,11 +237,8 @@ fn a_refused_frame_and_a_frame_of_another_size_free_their_buffers() {
     host.body();
     host.send(configure());
     host.body();
-    let error = host.body();
-    assert_eq!(
-        error,
-        json!({"error": "frame 1 is 65 by 32 at scale 2, but the region view is configured as 64 by 32 at scale 2"})
-    );
+    // While a region changes size, the application draws at the size it had before the new configure reached it; such a
+    // frame frees its buffer and is recorded, and the page sees no error.
     assert_eq!(host.body(), json!({"event": "cursor", "shape": "text"}));
     assert_eq!(
         host.body()["title"],
@@ -266,6 +263,13 @@ fn a_refused_frame_and_a_frame_of_another_size_free_their_buffers() {
     host.body();
     host.body();
     assert_eq!(host.next(), json!({"surface": "s1", "closed": true}));
+    let records = host.finish();
+    assert!(
+        records.lines().any(
+            |line| line == "frame 1 stale: 65 by 32 at scale 2, configured 64 by 32 at scale 2"
+        ),
+        "{records}"
+    );
 }
 
 #[test]

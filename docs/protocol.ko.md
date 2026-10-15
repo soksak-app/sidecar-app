@@ -28,7 +28,7 @@
 
 ## Image envelope
 
-애플리케이션의 각 `frame`은 sidecar protocol의 image envelope가 된다: 마지막 configure의 이름, generation, raster와 frame의 token, width, height, scale, format, sequence. 첫 configure 앞의 frame이나 크기 또는 배율이 마지막 configure와 다른 frame은 애플리케이션의 오류이고, sidecar는 그 버퍼가 다시 free가 되도록 `consumed`로 답한다.
+애플리케이션의 각 `frame`은 sidecar protocol의 image envelope가 된다: 마지막 configure의 이름, generation, raster와 frame의 token, width, height, scale, format, sequence. 첫 configure 앞의 frame은 애플리케이션의 오류다. 크기나 배율이 마지막 configure와 다른 frame은 region 크기가 바뀌는 동안 새 configure가 애플리케이션에 닿기 전에 그린 것이다. sidecar는 그것을 `frame <sequence> stale: …`로 기록하고 오류로 보고하지 않는다. sidecar는 둘 다 `consumed`로 답하므로 그 버퍼는 다시 free가 된다.
 
 ## 기록
 

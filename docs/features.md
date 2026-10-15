@@ -12,3 +12,4 @@
   - [o] A1.6 — P1: The sidecar records `frame <sequence> input <n>` on standard error for the first frame that shows a new input, which joins the input of the page to the answer of the host for that frame.
   - [o] A1.7 — P1: `package.json` names its repository, which the workspace registry requires.
   - [o] A1.8 — P1: A configure that arrives before the open of its surface is kept and passed to the application that the open starts.
+  - [o] A1.9 — P1: A frame of an earlier configure is answered with `consumed` and recorded, not reported to the page: while a region changes size the application draws frames at the size it had before the new configure reached it.
