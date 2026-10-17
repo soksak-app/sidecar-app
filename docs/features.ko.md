@@ -15,3 +15,4 @@
   - [o] A1.9 — P1: 이전 configure의 frame은 page에 오류로 보고하지 않고 `consumed`로 답하며 기록한다: region 크기가 바뀌는 동안 애플리케이션은 새 configure가 닿기 전의 크기로 frame을 그린다.
   - [o] A1.10 — P1: host가 현재 composition이나 generation에 붙지 않은 region 때문에 `notAttached`로 답한 frame은, `stale` 답처럼 buffer를 풀고 기록되며 page에 보고되지 않는다. page는 region을 붙이기 전에 애플리케이션을 열므로 첫 frame이 붙기 전에 올 수 있고, core의 연결 창 검사가 그 오류를 간헐적으로 보고했다.
 - [o] A2 — P2: release 경로: `make release OUT=<folder>`가 core의 sok로 registry release를 만들고, release workflow가 tag마다 그것을 게시하며, ci workflow가 `make test`와 commit message 검사를 실행한다.
+- [o] A3 — P1: 퇴역: core의 외부 애플리케이션 표면이 폐기되어 이 저장소를 쓰는 것이 없다. 저장소는 보관된다.

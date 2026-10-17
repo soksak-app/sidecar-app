@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+- A3: the repository is retired with the external application surface of core.
+
 - A2: `make release` makes the registry release with sok of core, the release workflow publishes it for a tag, and the ci workflow runs the tests and the commit message check. Green: the target made `soksak-sidecar-app-0.0.1-darwin-arm64.tar.gz` with its SHA-256.
 - A1.10: a frame that the host answers with `notAttached` frees its buffer and is recorded as `frame <n> refused: notAttached`, as a `stale` answer is, and the page sees no error; other refusals stay errors. Red: the sidecar check found the error body instead of the consumed answer. Green: 6 of 6.
 - A1.1.1: the sidecar takes the embed kit from its published release v0.0.1 instead of a path to a local checkout.

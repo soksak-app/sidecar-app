@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+- A3: core의 외부 애플리케이션 표면과 함께 저장소가 퇴역한다.
+
 - A2: `make release`가 core의 sok로 registry release를 만들고, release workflow가 tag마다 그것을 게시하며, ci workflow가 시험과 commit message 검사를 실행한다. Green: target이 SHA-256과 함께 `soksak-sidecar-app-0.0.1-darwin-arm64.tar.gz`를 만들었다.
 - A1.10: host가 `notAttached`로 답한 frame은 `stale` 답처럼 buffer를 풀고 `frame <n> refused: notAttached`로 기록되며, page는 오류를 보지 않는다. 다른 거부는 오류로 남는다. Red: sidecar 검사가 consumed 답 대신 오류 body를 찾았다. Green: 6개 중 6개.
 - A1.1.1: sidecar가 로컬 checkout의 path 대신 공개된 embed kit release v0.0.1을 쓴다.
